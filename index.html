@@ -217,8 +217,8 @@
     <!-- Question view -->
     <div id="questionView">
       <div class="emoji">💖</div>
-      <h1>Hey Anku, Will You Be My Valentine?</h1>
-      <p>Sagar has something very important to ask you...</p>
+      <h1 id="questionTitle">Hey, Will You Be My Valentine?</h1>
+      <p id="questionSubtitle">Someone has something very important to ask you...</p>
       <div class="buttons">
         <button class="btn btn-yes" id="btnYes" onclick="sayYes()">Yes! 💕</button>
         <button class="btn btn-no" id="btnNo">No 😢</button>
@@ -229,8 +229,8 @@
     <div class="success" id="successView">
       <div class="big-heart">❤️</div>
       <h1>I Knew It, You Love Me!</h1>
-      <p>Anku, you just made Sagar the happiest person in the world! 🥰</p>
-      <p style="margin-top: 8px; font-style: italic; color: #e91e63;">Forever yours, Sagar</p>
+      <p id="successMsg">You just made me the happiest person in the world! 🥰</p>
+      <p id="successSignoff" style="margin-top: 8px; font-style: italic; color: #e91e63;"></p>
     </div>
   </div>
 
@@ -238,6 +238,31 @@
   <div class="confetti-container" id="confettiContainer"></div>
 
   <script>
+    // ---- Read names from URL query params ----
+    const params = new URLSearchParams(window.location.search);
+    const boyName = params.get('boy') || '';
+    const girlName = params.get('girl') || '';
+
+    // Personalize the question screen
+    if (girlName) {
+      document.getElementById('questionTitle').textContent = `Hey ${girlName}, Will You Be My Valentine?`;
+    }
+    if (boyName) {
+      document.getElementById('questionSubtitle').textContent = `${boyName} has something very important to ask you...`;
+    } else {
+      document.getElementById('questionSubtitle').textContent = 'I have something very important to ask you...';
+    }
+
+    // Personalize the success screen
+    if (girlName && boyName) {
+      document.getElementById('successMsg').textContent = `${girlName}, you just made ${boyName} the happiest person in the world! 🥰`;
+    } else if (girlName) {
+      document.getElementById('successMsg').textContent = `${girlName}, you just made me the happiest person in the world! 🥰`;
+    }
+    if (boyName) {
+      document.getElementById('successSignoff').textContent = `Forever yours, ${boyName}`;
+    }
+
     // ---- Floating background hearts ----
     const heartsBg = document.getElementById('heartsBg');
     const heartEmojis = ['💕', '💗', '💓', '💖', '💘', '❤️', '💝', '🩷'];
